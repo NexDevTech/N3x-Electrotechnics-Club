@@ -6,12 +6,17 @@ import math
 
 #Camera select
 cam_select = 0
-#|ffgwghagw
+#|ffgw
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 cap = cv2.VideoCapture(cam_select)
-
+#JNGFGJNFNJ
+#FDHBFCNGF
+#AEGH
+#AG
+#FAWFAWG
+#dfQFAW
 #Source Control Message-Commit Test 
 
 cap = cv2.VideoCapture(cam_select)
