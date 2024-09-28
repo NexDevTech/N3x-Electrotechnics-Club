@@ -9,7 +9,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 #Camera Select:
 cap = cv2.VideoCapture(0)
-
+#Test
 with mp_hands.Hands(
     model_complexity=0,
     min_detection_confidence=0.5,
