@@ -1,6 +1,8 @@
 import cv2
 import mediapipe as mp
 import math
+#Media pipe imstall script:
+#pip install mediapipe
 
 #Camera select
 cam_select = 0
