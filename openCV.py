@@ -1,25 +1,15 @@
 import cv2
 import mediapipe as mp
 import math
-#Media pipe imstall script:
+#Mediapipe imstall script:
 #pip install mediapipe
 
-#Camera select
-cam_select = 0
-#|ffgw
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
-cap = cv2.VideoCapture(cam_select)
-#JNGFGJNFNJ
-#FDHBFCNGF
-#AEGH
-#AG
-#FAWFAWG
-#dfQFAW
-#Source Control Message-Commit Test 
+#Camera Select:
+cap = cv2.VideoCapture(0)
 
-cap = cv2.VideoCapture(cam_select)
 with mp_hands.Hands(
     model_complexity=0,
     min_detection_confidence=0.5,
