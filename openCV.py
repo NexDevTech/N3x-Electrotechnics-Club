@@ -9,15 +9,15 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 #Camera Select:
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 with mp_hands.Hands(
     model_complexity=0,
-    #
+    #hand tracking accuracy
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
 
-  while cap.isOpened(): #when camera is running 
+  while cap.isOpened(): #when camera is running, start hand tracking
     success, image = cap.read() 
     image_height, image_width, _ = image.shape
     #to improve performance
