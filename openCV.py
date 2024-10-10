@@ -4,7 +4,7 @@ import math
 #Mediapipe imstall script:
 #pip install mediapipe
 
-
+#Declaration for better writing
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
@@ -13,8 +13,8 @@ cap = cv2.VideoCapture(0)
 
 with mp_hands.Hands(
     model_complexity=0,
-    min_detection_confidence=0.5,
     #
+    min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
 
   while cap.isOpened(): #when camera is running 
@@ -36,6 +36,7 @@ with mp_hands.Hands(
             mp_hands.HAND_CONNECTIONS, #lines between Landmarks
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
+        #image range settings
         x_max = 0
         y_max = 0
         x_min = image_width
@@ -66,6 +67,6 @@ with mp_hands.Hands(
 ############################################################################################################################################################################
     # Flip the image horizontally for a mirror-view
     cv2.imshow('HandTracking', cv2.flip(image, 1))
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'): #capture window close key
       break
 cap.release()
