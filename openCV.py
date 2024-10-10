@@ -4,39 +4,43 @@ import math
 #Mediapipe imstall script:
 #pip install mediapipe
 
+
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 #Camera Select:
 cap = cv2.VideoCapture(0)
-#asfasfasfgjsodhgsdjgnbsduigfsii
+
 with mp_hands.Hands(
     model_complexity=0,
     min_detection_confidence=0.5,
+    #
     min_tracking_confidence=0.5) as hands:
 
-  while cap.isOpened():
-    success, image = cap.read()
+  while cap.isOpened(): #when camera is running 
+    success, image = cap.read() 
     image_height, image_width, _ = image.shape
     #to improve performance
-    image.flags.writeable = False
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image.flags.writeable = False 
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) #set the capture window settings
     results = hands.process(image)
-
+    
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
+          #show hand landmarks on screen
           mp_drawing.draw_landmarks(
             image,
             hand_landmarks,
-            mp_hands.HAND_CONNECTIONS,
+            mp_hands.HAND_CONNECTIONS, #lines between Landmarks
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
         x_max = 0
         y_max = 0
         x_min = image_width
         y_min = image_height
+        #Hand orientation points(Landmarks) placement
         for ids, landmrk in enumerate(hand_landmarks.landmark):
             cx = int(landmrk.x * image_width) # position x
             cy = int(landmrk.y * image_height) # position Y
