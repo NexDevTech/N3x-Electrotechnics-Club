@@ -5,29 +5,26 @@ from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
-# Set up the MediaPipe hand detection
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
-
 # Get system audio controller (pycaw)
-devices = AudioUtilities.GetSpeakers()
+devices = AudioUtilities.GetSpeakers() 
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-# Get the volume range (0 to 100%)
-vol_range = volume.GetVolumeRange()  # Typically (-65.25, 0.0), we normalize it to [0, 100]
+vol_range = volume.GetVolumeRange()  # Get the volume range (0 to 100%)
 min_vol = vol_range[0]
 max_vol = vol_range[1]
 
 # Camera Select:
 cap = cv2.VideoCapture(2)
 
-# Define the area for the upper-right corner (20% of the width and 20% of the height)
-corner_threshold_width = 0.5  # Rightmost 20%
-corner_threshold_height = 0.5  # Top 20%
+# Define the area for the upper-right corner
+corner_threshold_width = 0.5  
+corner_threshold_height = 0.5  
 
 volume_level = 0  # Initialize volume level
-x_text, y_text = 50, 50  # Initialize text position (default to top-left)
+x_text, y_text = 640, 50  # Initialize text position
 
 with mp_hands.Hands(
     model_complexity=0,
@@ -38,7 +35,7 @@ with mp_hands.Hands(
         success, image = cap.read()
         image_height, image_width, _ = image.shape
 
-        # Improve performance by setting image to non-writable
+        # Improve performance 
         image.flags.writeable = False
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         results = hands.process(image)
@@ -48,7 +45,6 @@ with mp_hands.Hands(
 
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
-                # Draw the hand annotations on the image
                 mp_drawing.draw_landmarks(
                     image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
@@ -70,9 +66,9 @@ with mp_hands.Hands(
                     # Calculate the distance between thumb and index finger
                     distance = math.hypot(x2 - x1, y2 - y1)
 
-                    # Normalize the distance to control volume level (map the distance to a volume range)
-                    min_distance = 20  # Minimum hand distance (closest thumb and index)
-                    max_distance = 100  # Maximum hand distance (spread apart)
+                    # Normalize the distance to control volume level 
+                    min_distance = 20  # Minimum fingers distance 
+                    max_distance = 100  # Maximum fingers distance 
                     volume_level = max(min((distance - min_distance) / (max_distance - min_distance), 1.0), 0.0)
 
                     # Map volume_level to system volume range
@@ -82,17 +78,16 @@ with mp_hands.Hands(
                     # Draw a line between the thumb and index finger
                     cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 3)
 
-                    # Calculate the text position (center between thumb and index finger)
+                    #text position 
                     x_text = (x1 + x2) // 2 + 80
                     y_text = (y1 + y2) // 2
 
-                    # Print the volume for feedback
+                    # console volume print
                     print(f"Distance: {distance:.2f}, Volume: {int(volume_level * 100)}%")
 
-        # Flip the image horizontally for a mirror view
         flipped_image = cv2.flip(image, 1)
 
-        # Now draw the text AFTER the flip (so it isn't mirrored)
+        #draw the text after the flip (so it isn't mirrored)
         cv2.putText(flipped_image, f'{int(volume_level * 100)}%', (image_width - x_text, y_text),
                     cv2.FONT_HERSHEY_COMPLEX, 1, (128, 128, 128), 2)
 
