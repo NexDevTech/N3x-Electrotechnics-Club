@@ -2,8 +2,13 @@ import cv2
 import mediapipe as mp
 import math
 from ctypes import cast, POINTER
+###################################
+################!!!################
+#!!![pip install pycaw]!!!
+################!!!################
+###################################
 from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume 
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -17,7 +22,7 @@ min_vol = vol_range[0]
 max_vol = vol_range[1]
 
 # Camera Select:
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 # Define the area for the upper-right corner
 corner_threshold_width = 0.5  
@@ -68,7 +73,7 @@ with mp_hands.Hands(
 
                     # Normalize the distance to control volume level 
                     min_distance = 20  # Minimum fingers distance 
-                    max_distance = 100  # Maximum fingers distance 
+                    max_distance = 160  # Maximum fingers distance 
                     volume_level = max(min((distance - min_distance) / (max_distance - min_distance), 1.0), 0.0)
 
                     # Map volume_level to system volume range
