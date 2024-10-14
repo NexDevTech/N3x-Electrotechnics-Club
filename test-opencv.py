@@ -8,7 +8,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 
 # Camera Select:
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 with mp_hands.Hands(
     model_complexity=0,
@@ -36,8 +36,6 @@ with mp_hands.Hands(
                     mp_hands.HAND_CONNECTIONS,
                     mp_drawing_styles.get_default_hand_landmarks_style(),
                     mp_drawing_styles.get_default_hand_connections_style())
-
-                # Initialize list to store landmarks (quest 0)
                 landmarks_positions = []
 
                 # Hand orientation points(Landmarks) placement
@@ -46,16 +44,13 @@ with mp_hands.Hands(
                     cy = int(landmark.y * image_height)  # position y
                     landmarks_positions.append((ids, cx, cy))  # Append tuple (id, x, y) to list
 
-                # Print the list of landmark positions for debugging purposes
-                # print(landmarks_positions)  # Uncomment this if you want to see the list
 
-                # Calculate the distance between two points (quest 1)
-                # For example, calculate the distance between landmark 4 (thumb tip) and landmark 8 (index fingertip)
+                # Calculate the distance between two points (quest 1)  
                 if len(landmarks_positions) >= 9:
                     x1, y1 = landmarks_positions[4][1], landmarks_positions[4][2]  # Thumb tip
                     x2, y2 = landmarks_positions[8][1], landmarks_positions[8][2]  # Index fingertip
 
-                    # Calculate distance using math.hypot (preferred method as it combines dx and dy)
+                    # Calculate distance 
                     distance = math.hypot(x2 - x1, y2 - y1)
 
                     # Print the calculated distance between thumb tip and index fingertip
