@@ -19,7 +19,7 @@ This repository is continually updated with new materials that will assist in ex
 1. **Clone the repository**:
 
  
-    git clone https://github.com/NexDevTech/N3x-Krouzek.git
+    git clone https://github.com/NexDevTech/N3x-Electrotechnics-Club.git
    
 
 2. **Navigate to the project folder** and follow the instructions provided in each subfolder for specific exercises.
