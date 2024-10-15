@@ -69,16 +69,22 @@ with mp_hands.Hands(
                     x2, y2 = landmarks_positions[8][1], landmarks_positions[8][2]  # Index fingertip
 
                     # Calculate the distance between thumb and index finger
-                    distance = math.hypot(x2 - x1, y2 - y1)
+                    distance_thumb_index = math.hypot(x2 - x1, y2 - y1)
 
-                    # Normalize the distance to control volume level 
-                    min_distance = 20  # Minimum fingers distance 
-                    max_distance = 160  # Maximum fingers distance 
-                    volume_level = max(min((distance - min_distance) / (max_distance - min_distance), 1.0), 0.0)
+                    # Get the wrist (landmark 0) and index base (landmark 5) to use as reference
+                    wrist_x, wrist_y = landmarks_positions[0][1], landmarks_positions[0][2]  # Wrist
+                    index_base_x, index_base_y = landmarks_positions[5][1], landmarks_positions[5][2]  # Index base
 
-                    # Map volume_level to system volume range
-                    target_volume = volume_level * (max_vol - min_vol) + min_vol
-                    volume.SetMasterVolumeLevel(target_volume, None)
+                    # Calculate the reference distance (wrist to index base)
+                    reference_distance = math.hypot(index_base_x - wrist_x, index_base_y - wrist_y)
+
+                    # Normalize the thumb-index distance by the reference distance
+                    if reference_distance > 0:
+                        normalized_distance = distance_thumb_index / reference_distance
+
+                        # Map the normalized distance to the volume level
+                        volume_level = max(min((normalized_distance - 0.5) / (2.0 - 0.5), 1.0), 0.0)
+
 
                     # Draw a line between the thumb and index finger
                     cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 3)
