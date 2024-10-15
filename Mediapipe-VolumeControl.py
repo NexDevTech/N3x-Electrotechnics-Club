@@ -84,15 +84,16 @@ with mp_hands.Hands(
 
                         # Map the normalized distance to the volume level
                         volume_level = max(min((normalized_distance - 0.5) / (2.0 - 0.5), 1.0), 0.0)
-                # Draw a line between the thumb and index finger
-                cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 3)
+
+                    # Draw a line between the thumb and index finger
+                    cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 3)
 
                 #text position 
                 x_text = (x1 + x2) // 2 + 80
                 y_text = (y1 + y2) // 2
 
                 # console volume print
-                print(f"Distance: {distance:.2f}, Volume: {int(volume_level * 100)}%")
+                print(f"Distance: {reference_distance:.2f}, Volume: {int(volume_level * 100)}%")
 
         flipped_image = cv2.flip(image, 1)
 
