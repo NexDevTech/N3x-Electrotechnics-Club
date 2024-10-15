@@ -72,7 +72,7 @@ with mp_hands.Hands(
                     distance = math.hypot(x2 - x1, y2 - y1)
 
                     # Normalize the distance to control volume level 
-                    min_distance = 20  # Minimum fingers distance 
+                    min_distance = 30  # Minimum fingers distance 
                     max_distance = 160  # Maximum fingers distance 
                     volume_level = max(min((distance - min_distance) / (max_distance - min_distance), 1.0), 0.0)
 
