@@ -71,11 +71,11 @@ with mp_hands.Hands(
                     # Calculate the distance between thumb and index finger
                     distance_thumb_index = math.hypot(x2 - x1, y2 - y1)
 
-                    # Get the wrist (landmark 0) and index base (landmark 5) to use as reference
+                    # landmarks length reference [keeps the percentage same no matter how far is the hand from screen]
                     wrist_x, wrist_y = landmarks_positions[0][1], landmarks_positions[0][2]  # Wrist
                     index_base_x, index_base_y = landmarks_positions[5][1], landmarks_positions[5][2]  # Index base
 
-                    # Calculate the reference distance (wrist to index base)
+                    # Calculate the distance between index finger and thumb 
                     reference_distance = math.hypot(index_base_x - wrist_x, index_base_y - wrist_y)
 
                     # Normalize the thumb-index distance by the reference distance
